@@ -1,0 +1,20 @@
+
+# Added by Codex CLI
+.DS_Store
+*.log
+*.pem
+*.p12
+*.pfx
+*.key
+.env
+.env.*
+.git-credentials
+.netrc
+node_modules/
+coverage/
+dist/
+build/
+.cache/
+.next/
+.vercel/
+.turbo/
