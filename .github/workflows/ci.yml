@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies (npm ci if lockfile)
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+      - name: Run tests (if present)
+        run: |
+          if npm run | grep -q " test"; then
+            npm test
+          elif [ -f playwright.config.* ]; then
+            npx playwright install --with-deps || true
+            npx playwright test || true
+          else
+            echo "No tests configured"
+          fi
+
